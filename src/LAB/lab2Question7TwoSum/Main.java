@@ -1,6 +1,5 @@
 package LAB.lab2Question7TwoSum;
 
-
 import java.util.Scanner;
 
 //Write a program that finds all pairs of integers in an array
@@ -15,6 +14,7 @@ public class Main {
         for(int i=0;i<arr.length;i++){
             arr[i]=sc.nextInt();
         }
+
         return arr;
 
     }
