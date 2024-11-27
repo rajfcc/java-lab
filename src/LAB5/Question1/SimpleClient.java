@@ -1,30 +1,25 @@
 package LAB5.Question1;
-
 import java.io.*;
-import java.net.*;
+import java.net.Socket;
 
 public class SimpleClient {
-    public static void main(String[] args) {
-        String hostname = "localhost"; // Server address
-        int port = 12345; // Server port number
+    public static void main(String[] args)throws Exception{
+        Socket s=new Socket("localhost",3333);
+        DataInputStream din=new DataInputStream(s.getInputStream());
+        DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 
-        try (Socket socket = new Socket(hostname, port)) {
-            // Get input and output streams
-            OutputStream output = socket.getOutputStream();
-            PrintWriter writer = new PrintWriter(output, true);
-            InputStream input = socket.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 
-            // Send message to server
-            writer.println("Hello Server!");
-
-            // Read response from server
-            String response = reader.readLine();
-            System.out.println("Server responded: " + response);
-        } catch (UnknownHostException ex) {
-            System.out.println("Server not found: " + ex.getMessage());
-        } catch (IOException ex) {
-            System.out.println("I/O error: " + ex.getMessage());
+        String str="",str2="";
+        while(!str.equals("stop")){
+            str=br.readLine();
+            dout.writeUTF(str);
+            dout.flush();
+            str2=din.readUTF();
+            System.out.println("Server says: "+str2);
         }
+
+        dout.close();
+        s.close();
     }
 }

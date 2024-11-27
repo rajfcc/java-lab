@@ -95,11 +95,11 @@ class LoginSystem {
         });
 
         // Add window listener
-        loginFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
+//        loginFrame.addWindowListener(new WindowAdapter() {
+//            public void windowClosing(WindowEvent e) {
+//                System.exit(0);
+//            }
+//        });
 
         // Add key listener for Enter key
         KeyListener enterKeyListener = new KeyAdapter() {
@@ -142,12 +142,12 @@ class LoginSystem {
         welcomeLabel.setForeground(Color.WHITE);
         topPanel.add(welcomeLabel, BorderLayout.CENTER);
 
-        Button logoutButton = new Button("Logout");
-        logoutButton.setBackground(new Color(220, 220, 220));
-        Panel logoutPanel = new Panel(new FlowLayout(FlowLayout.RIGHT));
-        logoutPanel.setBackground(new Color(70, 130, 180));
-        logoutPanel.add(logoutButton);
-        topPanel.add(logoutPanel, BorderLayout.EAST);
+//        Button logoutButton = new Button("Logout");
+//        logoutButton.setBackground(new Color(220, 220, 220));
+//        Panel logoutPanel = new Panel(new FlowLayout(FlowLayout.RIGHT));
+//        logoutPanel.setBackground(new Color(70, 130, 180));
+//        logoutPanel.add(logoutButton);
+//        topPanel.add(logoutPanel, BorderLayout.EAST);
 
         // Create content panel
         Panel contentPanel = new Panel(new GridBagLayout());
@@ -161,21 +161,21 @@ class LoginSystem {
         homeFrame.add(contentPanel, BorderLayout.CENTER);
 
         // Add action listeners
-        logoutButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                homeFrame.dispose();
-                usernameField.setText("");
-                passwordField.setText("");
-                errorLabel.setText("");
-                loginFrame.setVisible(true);
-            }
-        });
+//        logoutButton.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                homeFrame.dispose();
+//                usernameField.setText("");
+//                passwordField.setText("");
+//                errorLabel.setText("");
+//                loginFrame.setVisible(true);
+//            }
+//        });
 
-        homeFrame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
+//        homeFrame.addWindowListener(new WindowAdapter() {
+//            public void windowClosing(WindowEvent e) {
+//                System.exit(0);
+//            }
+//        });
 
         homeFrame.setVisible(true);
     }

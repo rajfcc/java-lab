@@ -3,31 +3,33 @@ package LAB5.Question2;
 import java.net.*;
 
 public class UDPClient {
-    public static void main(String[] args) {
-        String serverAddress = "localhost"; // Server address
-        int serverPort = 12345; // Server port number
+    public static void main(String[] args) throws Exception {
+        DatagramSocket clientSocket = new DatagramSocket();
+        InetAddress IPAddress = InetAddress.getByName("localhost");
+        byte[] sendData;
+        byte[] receiveData = new byte[1024];
 
-        try (DatagramSocket socket = new DatagramSocket()) {
-            // Send message to server
-            String message = "Hello Server!";
-            byte[] buffer = message.getBytes();
-            InetAddress serverInetAddress = InetAddress.getByName(serverAddress);
+        // Message to send to server
+        String message = "Hello from client";
+        sendData = message.getBytes();
 
-            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, serverInetAddress, serverPort);
-            socket.send(packet);
-            System.out.println("Message sent to the server.");
+        // Send packet to server
+        DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
+        clientSocket.send(sendPacket);
 
-            // Receive response from server
-            byte[] responseBuffer = new byte[1024];
-            DatagramPacket responsePacket = new DatagramPacket(responseBuffer, responseBuffer.length);
-            socket.receive(responsePacket);
+        // Receive response from server
+        DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+        clientSocket.receive(receivePacket);
+        String serverResponse = new String(receivePacket.getData(), 0, receivePacket.getLength());
 
-            String response = new String(responsePacket.getData(), 0, responsePacket.getLength());
-            System.out.println("Server responded: " + response);
+        System.out.println("Received from server: " + serverResponse);
+        String exitMessage = "exit";
+        sendData = exitMessage.getBytes();
 
-        } catch (Exception e) {
-            System.out.println("Client error: " + e.getMessage());
-            e.printStackTrace();
-        }
+        // Send packet to server
+        DatagramPacket sendexitPacket = new DatagramPacket(sendData, sendData.length, IPAddress, 9876);
+        clientSocket.send(sendexitPacket);
+
+        clientSocket.close();
     }
 }

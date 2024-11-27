@@ -1,38 +1,31 @@
 package LAB5.Question1;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class SimpleServer {
-    public static void main(String[] args) {
-        int port = 12345; // Port number to listen on
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
-            System.out.println("Server is listening on port " + port);
+    public static void main(String[] args)throws Exception{
+        ServerSocket ss=new ServerSocket(3333);
+        Socket s=ss.accept();
+        DataInputStream din=new DataInputStream(s.getInputStream());
+        DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 
-            while (true) {
-                // Accept a client connection
-                Socket socket = serverSocket.accept();
-                System.out.println("Client connected");
-
-                // Get input and output streams
-                InputStream input = socket.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-                OutputStream output = socket.getOutputStream();
-                PrintWriter writer = new PrintWriter(output, true);
-
-                // Read message from client
-                String message = reader.readLine();
-                System.out.println("Received: " + message);
-
-                // Respond to client
-                writer.println("Server received: " + message);
-
-                // Close connection
-                socket.close();
-            }
-        } catch (IOException ex) {
-            System.out.println("Server exception: " + ex.getMessage());
-            ex.printStackTrace();
+        String str="",str2="";
+        while(!str.equals("stop")){
+            str=din.readUTF();
+            System.out.println("client says: "+str);
+            str2=br.readLine();
+            dout.writeUTF(str2);
+            dout.flush();
         }
+        din.close();
+        s.close();
+        ss.close();
     }
 }
+
